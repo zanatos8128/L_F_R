@@ -1,0 +1,373 @@
+
+
+
+/*------------------------*/
+/*-------ENABLE PINS------*/
+/*------------------------*/
+int speed_left = 6;        // Enable pin for left motor.
+int speed_right = 9;       // Enable pin for Right motor.
+
+/*------------------------*/
+/*-------MOTOR PINS-------*/
+/*------------------------*/
+int motorpin1_left = 8;   // Left motor output 1.
+int motorpin2_left = 5;   // Left motor output 2.
+int motorpin1_right = 12; // Right motor output 1.
+int motorpin2_right = 11; // Right motor output 2.
+
+/*------------------------*/
+/*-------SENSOR PINS------*/
+/*------------------------*/
+int sensor_left1 = 10;    // Sensor left 1.
+int sensor_left2 = 3;     // Sensor left 2.
+int sensor_center = 2;    // Sensor center.
+int sensor_right1 = 13;   // Sensor right 1.
+int sensor_right2 = 7;    // Sensor right 2.
+
+
+int left;                 // Speed of the left motor.
+int right;                // Speed of the right motor.
+
+
+/*------------------------*/
+/*------MAIN FUNCTION-----*/
+/*------------------------*/
+void setup()
+{
+	pinMode(speed_left, OUTPUT);     // Set pin connected to Enable 1 as output.
+	pinMode(speed_right, OUTPUT);    // Set pin connected to Enable 2 as output.
+	pinMode(motorpin1_left, OUTPUT); // Set pin connected to Output 1 as output.
+	pinMode(motorpin2_left, OUTPUT); // Set pin connected to Output 2 as output.
+	pinMode(motorpin1_right, OUTPUT);// Set pin connected to Output 4 as output.
+	pinMode(motorpin2_right, OUTPUT);// Set pin connected to Output 3 as output.
+
+	pinMode(sensor_left1, INPUT);    // Set pin connected to sensor left 1 as input.
+	pinMode(sensor_left2, INPUT);    // Set pin connected to sensor left 2 as input.
+	pinMode(sensor_center, INPUT);   // Set pin connected to sensor center as input.
+	pinMode(sensor_right1, INPUT);   // Set pin connected to sensor right 1 as input.
+	pinMode(sensor_right2, INPUT);   // Set pin connected to sensor right 1 as input.
+}
+
+/*------------------------*/
+/*------LOOP FUNCTION-----*/
+/*------------------------*/
+void loop()
+{
+	// Call track sub-function
+	track();
+}
+
+void track()
+{
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	/* GOTO STRAIGHT */
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	// 01110 go straight
+	if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 0))
+	{
+		motor_move_straight();
+	}
+	// 11011 go straight
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
+	{
+		//left = 255;
+		//right = 245;
+		// experiment for 8 volts input
+		//motor_move_straight_soft();
+		motor_move_straight();
+		
+	}
+	//00100 go straight
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
+	{
+		motor_move_straight();
+	}
+	// 01110 go staright
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 1))
+	{
+		motor_move_straight();
+	}
+	// 11001 go staright
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 1))
+	{
+		motor_move_straight();
+		//left = 230;
+		//right = 255;
+		//motor_move_left_hard();
+	}
+	// 10011 go straight
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
+	{
+		motor_move_straight();
+	}
+	// 10101 go straight
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 1))
+	{
+		motor_move_straight();
+	}
+	// 11111 stop
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
+	{
+  
+                
+		motor_stop();
+                delay(9000000);
+	}
+	// 00000 stop
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
+	{
+		motor_stop();
+                delay(9000000);
+	}
+
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	/* GOTO RIGHT */
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	// 10111 right
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
+	{
+		left = 215;
+		right = 195;
+		motor_move_right_soft();
+	}
+	// 00001 right
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 1))
+	{
+		left = 249;
+		right = 210;
+		//motor_move_right_hard();
+		motor_move_right_soft();
+	}
+	// 00010 right
+/*
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 249;
+		right = 205;
+		motor_move_right_hard();
+	}
+*/
+	// 00011 right
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
+	{
+		left = 245;
+		right = 210;
+		motor_move_right_hard();
+		//motor_move_right_soft();
+	}
+	// 00110 right
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 249;
+		right = 209;
+		motor_move_right_soft();
+	}
+	// 00101 right
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 1))
+	{
+		left = 235;
+		right = 215;
+		motor_move_right_soft();
+	}
+	// 00111 right
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
+	{
+		left = 235;
+		right = 195;
+		motor_move_right_hard();
+	}
+	// 01111 right
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
+	{
+		left = 250;
+		right = 190;
+		motor_move_right_hard();
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	/* GOTO LEFT */
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	// 11101 left
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 1))
+	{
+		left = 200;
+		right = 190;
+		motor_move_left_soft();
+	}
+	// 10000 left
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 250;
+		right = 235;
+		//motor_move_left_hard();
+		motor_move_left_hard();
+	}
+	// 01000 left
+/*
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 245;
+		right = 235;
+		motor_move_left_hard();
+		//motor_move_left_soft();
+	}
+*/
+	// 11000 left
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 230;
+		right = 240;
+		motor_move_left_hard();
+		//motor_move_left_soft();
+	}
+	// 01100 left
+	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 235;
+		right = 245;
+		motor_move_left_hard();
+		//motor_move_left_soft();
+	}
+	// 10100 left
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 225;
+		right = 240;
+		motor_move_left_soft();
+	}
+	// 11100 left
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 226;
+		right = 235;
+		motor_move_left_hard();
+	}
+	// 11110 ledr
+	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 0))
+	{
+		left = 230;
+		right = 245;
+		motor_move_left_hard();
+	}
+	// stop
+	else 
+	{
+		motor_stop();
+	}
+	
+}
+
+/* MOTORS MOVEMENTS */
+//------------------------------------------
+/* FORWARD MOVE */
+//------------------------------------------
+void motor_move_straight()
+{
+	left = 250;
+	right = 245;
+
+	analogWrite(speed_left, left);
+	analogWrite(speed_right, right);
+
+	digitalWrite(motorpin1_left, HIGH);
+	digitalWrite(motorpin2_left, LOW);
+	digitalWrite(motorpin1_right, HIGH);
+	digitalWrite(motorpin2_right, LOW);
+}
+
+void motor_move_straight_soft()
+{
+analogWrite(speed_left, left);
+analogWrite(speed_right, right);
+// direction forward
+digitalWrite(motorpin1_left, 1);
+digitalWrite(motorpin2_left, 0);
+digitalWrite(motorpin1_right, 1);
+digitalWrite(motorpin2_right, 0);
+}
+
+//-------------------------------------------
+/* MOVE RIGHT */
+//-------------------------------------------
+
+void motor_move_right_soft()
+{
+	//left = 255;
+	//right = 215;
+
+	analogWrite(speed_left, left);
+	analogWrite(speed_right, right);
+	// direction right
+	digitalWrite(motorpin1_left, 1);
+	digitalWrite(motorpin2_left, 0);
+	digitalWrite(motorpin1_right, 0);
+	digitalWrite(motorpin2_right, 1);
+}
+
+void motor_move_right_hard()
+{
+	//left = 0;
+	//right = 235;
+
+	analogWrite(speed_left, left);
+	analogWrite(speed_right, right);
+	//direction right
+	digitalWrite(motorpin1_left, 1);
+	digitalWrite(motorpin2_left, 0);
+	digitalWrite(motorpin1_right, 0);
+	digitalWrite(motorpin2_right, 1);
+}
+
+
+//--------------------------------------
+/* MOVE LEFT */
+//--------------------------------------
+void motor_move_left_soft()
+{
+	//left = 195;
+	//right = 195;
+
+	analogWrite(speed_left, left);
+	analogWrite(speed_right, right);
+	// direction left
+	digitalWrite(motorpin1_left, 0);
+	digitalWrite(motorpin2_left, 1);
+	digitalWrite(motorpin1_right, 1);
+	digitalWrite(motorpin2_right, 0);
+}
+
+void motor_move_left_hard()
+{
+	//left = 255;
+	//right = 195;
+
+	analogWrite(speed_left, left);
+	analogWrite(speed_right, right);
+	// direction left
+	digitalWrite(motorpin1_left, 0);
+	digitalWrite(motorpin2_left, 1);
+	digitalWrite(motorpin1_right, 1);
+	digitalWrite(motorpin2_right, 0);
+}
+
+//---------------------------------------
+/* MOTOR STOP */
+//---------------------------------------
+void motor_stop()
+{
+	left = 0;
+	right = 0;
+
+	analogWrite(speed_left, left);
+	analogWrite(speed_right, right);
+	// stop motors
+	digitalWrite(motorpin1_left, 0);
+	digitalWrite(motorpin2_left, 0);
+	digitalWrite(motorpin1_right, 0);
+	digitalWrite(motorpin2_right, 0);
+}
