@@ -110,19 +110,13 @@ void track()
 	// 11111 stop
 	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 1) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
 	{
-  
-                
 		motor_stop();
-                delay(9000000);
 	}
 	// 00000 stop
 	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
 	{
 		motor_stop();
-                delay(9000000);
 	}
-
-
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	/* GOTO RIGHT */
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
