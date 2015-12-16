@@ -137,14 +137,14 @@ void track()
 		motor_move_right_soft();
 	}
 	// 00010 right
-/*
+
 	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 0))
 	{
 		left = 249;
 		right = 205;
 		motor_move_right_hard();
 	}
-*/
+
 	// 00011 right
 	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 0) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 1) && ((digitalRead(sensor_right2)) == 1))
 	{
@@ -202,7 +202,7 @@ void track()
 		motor_move_left_hard();
 	}
 	// 01000 left
-/*
+
 	else if ((digitalRead(sensor_left2) == 0) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
 	{
 		left = 245;
@@ -210,7 +210,7 @@ void track()
 		motor_move_left_hard();
 		//motor_move_left_soft();
 	}
-*/
+
 	// 11000 left
 	else if ((digitalRead(sensor_left2) == 1) && ((digitalRead(sensor_left1)) == 1) && ((digitalRead(sensor_center)) == 0) && ((digitalRead(sensor_right1)) == 0) && ((digitalRead(sensor_right2)) == 0))
 	{
